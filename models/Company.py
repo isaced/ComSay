@@ -21,9 +21,3 @@ class Company(db.Model):
         
     def __repr__(self):
         return '<Company %>' % self.name
-
-def init_db():
-    """
-        此方法用来创建company表,请在未创建company表时使用
-    """
-    db.create_all()

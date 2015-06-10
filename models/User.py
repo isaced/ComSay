@@ -21,9 +21,3 @@ class User(db.Model):
     
     def __repr__(self):
         return '<User %r>' %self.user_name
-
-def init_db():
-    """
-        此方法用来创建User表,请在未创建User表时使用
-    """
-    db.create_all()
