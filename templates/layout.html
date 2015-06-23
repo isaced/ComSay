@@ -7,7 +7,6 @@
     <meta name="description" content="说说你想说的公司">
 
     <title>{% block title %}{% endblock %}</title>
-
     <!-- Bootstrap core CSS -->
     <link href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
 
@@ -17,18 +16,35 @@
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="http://v3.bootcss.com/assets/js/ie-emulation-modes-warning.js"></script>
-
+	 <script src="static/jquery-1.8.3.js"></script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <script type="text/javascript">
+		{% with messages = get_flashed_messages() %}
+		  {% if messages %}
+		    {% for message in messages %}
+		    	alert("{{message}}");
+		    {% endfor %}
+		  {% endif %}
+		{% endwith %}
+		{% block script %}
+		{% endblock%}    
+    </script>
   </head>
-
   <body>
-	进入<a href="/">首页</a>，欢迎您，{% if session.get("user") %}{{session.get("user").user_name}}，
-	进入<a href="/user">用户中心</a>或<a href="/logout">退出</a>{% else %}游客，请<a href="/login">登录</a>{% endif %}  
     <div class="container">
+          <div class="header clearfix">
+        <nav>
+          <ul class="nav nav-pills pull-right">
+				进入<a href="/">首页</a>，欢迎您，{% if session.get("user") %}{{session.get("user").user_name}}，
+			进入<a href="/user">用户中心</a>或<a href="/logout">退出</a>{% else %}游客，请<a href="/login">登录</a>{% endif %}
+          </ul>
+        </nav>
+        <h3 class="text-muted">公司说</h3>
+      </div>
       {% block body %}{% endblock %}
       <footer class="footer">
         <p>&copy; Company Say 2014</p>

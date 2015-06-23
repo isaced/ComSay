@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block title %}公司说{% endblock %}
+
+{% block script %}
+	$(function(){
+		$("#register").click(function(){
+			window.location.href="/register";
+		});
+	});
+{% endblock %}
+
+{% block body %}
+      <div class="row marketing">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-6">
+			<form method="POST" action="/login">
+			  <div class="form-group">
+			    <label for="exampleInputEmail1">User Name</label>
+			    <input class="form-control" name="username" placeholder="Enter UserName">
+			    {% if error=="NOT_EXISTS" %}<p class="text-warning">用户名不存在</p>{% endif %}
+			  </div>
+			  <div class="form-group">
+			    <label for="exampleInputPassword1">Password</label>
+			    <input type="password" class="form-control" name="password" placeholder="Password">
+			    {% if error=="WRONG_PASSWORD" %}<p class="text-warning">密码错误</p>{% endif%}
+			  </div>
+			  <button type="submit" class="btn btn-default">登录</button>
+			  <button id="register" type="button" class="btn btn-default">注册</button>
+			</form>
+        </div>
+        <div class="col-lg-3"></div>
+      </div>
+{% endblock %}

@@ -14,10 +14,15 @@ class User(db.Model):
     modify_time=db.Column(db.String(20))
     
     def __init__(self,user_name,password,create_time,modify_time):
-        this.user_name=user_name
-        this.password=password
-        this.create_time=create_time
-        this.modify_time=modify_time
+        self.user_name=user_name
+        self.password=password
+        self.create_time=create_time
+        self.modify_time=modify_time
     
     def __repr__(self):
         return '<User %r>' %self.user_name
+
+    def add(user):
+        db.session.add(user)
+        db.session.commit()
+        
