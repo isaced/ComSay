@@ -3,13 +3,16 @@ from flask import Blueprint, render_template,request,Response,make_response,sess
 index = Blueprint('index', __name__)
 
 from models.User import User
-import time
+import time,serials
 
 @index.route('/')
 def index_list():
-    user=User.query.filter_by(user_name="isaced").first()
-    print(user.user_name)
-    return render_template('index.html',mem=user)
+    return render_template('index.html')
+
+@index.route("/logout")
+def logout():
+    session["user"]=None
+    return render_template("index.html")    
 
 @index.route('/login',methods=["GET","POST"])
 def login():
@@ -31,14 +34,15 @@ def login():
                 error="NOT_EXISTS"
                 return render_template("login.html",error=error)
             elif password==user.password:
-                print(user.__dict__)
-                session["user"]=user
+                _dict=serials.getDict(user)
+                session["user"]=_dict
                 return redirect(url_for("vip.index"))
             else:
                 error="WRONG_PASSWORD"
                 return render_template("login.html",error=error)
     else:
         abort(404)
+        
 
 @index.route("/register",methods=["GET","POST"])
 def register():
@@ -50,7 +54,6 @@ def register():
         user=User(user_name,password,time.strftime("%Y-%m-%d %T"),None)
         User.add(user)
         print(user.id+","+user.user_name+","+user.password+","+user.create_time+","+user.modify_time)
-        #user=User.query.filter_by(user_name=user.user_name).first()
         session[user]=user.__dict__
         return redirect(url_for("vip.index"))
 

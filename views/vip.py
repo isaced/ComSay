@@ -3,7 +3,7 @@ Created on 2015-6-12
 
 @author: Shuang.Wu
 '''
-from flask import Blueprint,session
+from flask import Blueprint,session,render_template
 vip=Blueprint("vip",__name__)
 
 
