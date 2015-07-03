@@ -20,4 +20,8 @@ class Company(db.Model):
         self.modifyTime=modifyTime
         
     def __repr__(self):
-        return '<Company %>' % self.name
+        return '<Company %r>' % (self.name)
+    
+    def add(company):
+        db.session.add(company)
+        db.session.commit()

@@ -1,0 +1,71 @@
+{% extends "layout.html" %}
+{% block title %}公司说{% endblock %}
+{% block script %}
+$(function(){
+	$("#form").submit(function(e){
+		var contents=$("#contents").val();
+		if(contents.length==0){
+			$("#error_msg").html("评论不能为空");
+			e.preventDefault();
+			return 0;
+		}
+		if(contents.length>100){
+			$("#error_msg").html("超过字数限制");
+			e.preventDefault();
+			return 0;
+		}
+	});
+});
+{% endblock %}
+{% block body %}
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span12">
+				<h3 class="text-center">
+					{{company.name}}
+				</h3>
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div class="span12">
+				<p class="text-left">
+					{{company.description}}
+				</p>
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div class="span12">
+				<div class="page-header">
+					<h1>
+						精彩评论<small></small>
+					</h1>
+				</div>
+				{% for comment in list %}			
+				<blockquote>
+					<p>
+						{{comment.contents}}
+					</p> <small>{{comment.user.user_name}}<cite>{{comment.create_time}}</cite></small>
+				</blockquote>
+				{% endfor %}
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div class="span12">
+				<h3 class="text-center">
+					我的评论
+				</h3>
+				{% if session.get("user") %}
+				<form id="form" action="/company/comments/submit" method="POST">
+					 <textarea id="contents" name="contents" class="form-control" placeholder="不超过100个汉字"></textarea>
+					 <span id="error_msg" class="help-block"></span>
+					 <input type="text" style="display:none;" name="user_id" value="{{session.get("user").id}}"/>
+					 <input type="text" style="display:none;" name="company_id" value="{{company.id}}"/>
+					 <button type="submit" class="btn btn-default">提交</button>
+				</form>
+				{% else %}
+					对不起，您现在无法评论，请<a href="/login">登录</a>
+				{% endif %}		
+			</div>
+		</div>
+	</div>
+{% endblock %}
